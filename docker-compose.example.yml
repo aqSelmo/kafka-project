@@ -24,6 +24,18 @@ services:
     depends_on:
       - db
       - kafka
+    environment:
+      NODE_ENV:
+      TYPEORM_CONNECTION:
+      TYPEORM_HOST:
+      TYPEORM_PORT:
+      TYPEORM_USERNAME:
+      TYPEORM_DATABASE:
+      TYPEORM_PASSWORD:
+      TYPEORM_MIGRATIONS_RUN:
+      TYPEORM_ENTITIES:
+      TYPEORM_MIGRATIONS:
+      TYPEORM_MIGRATIONS_DIR:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
