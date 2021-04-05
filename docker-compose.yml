@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    networks:
+      - app-network
+    volumes:
+      - ./database:/var/lib/postgresql/data
+  app:
+    build: .
+    command: yarn start:dev
+    networks:
+      - app-network
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - kafka
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - '2181:2181'
+    networks:
+      - app-network
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    ports:
+      - '9092:9092'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - zookeeper
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
